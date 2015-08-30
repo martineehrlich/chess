@@ -65,6 +65,8 @@ class Game
     board.send(MOVEMENTS[input])
   end
 end
+
+# Game starting logic!
 player1 = HumanPlayer.new("white")
 player2 = HumanPlayer.new("black")
 game = Game.new(player1, player2)
