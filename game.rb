@@ -1,7 +1,6 @@
 require_relative 'board'
 require 'io/console'
 require 'colorize'
-require_relative 'cursor'
 require_relative 'human_player'
 require_relative 'computer_player'
 

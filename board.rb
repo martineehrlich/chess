@@ -1,6 +1,5 @@
 require 'colorize'
 require 'byebug'
-require_relative 'cursor'
 require_relative 'all_pieces'
 require_relative 'emptysquare'
 
