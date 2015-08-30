@@ -2,72 +2,50 @@ require_relative 'board'
 require 'io/console'
 require 'colorize'
 require_relative 'cursor'
-require_relative 'piece'
-require_relative 'sliding_piece'
-require_relative 'stepping_piece'
-require_relative 'bishop'
-require_relative 'knight'
-require_relative 'king'
-require_relative 'queen'
-require_relative 'pawn'
-require_relative 'rook'
 require_relative 'human_player'
+require_relative 'computer_player'
+
 
 class Game
-  MOVEMENTS = {
-    'w' => :cursor_up,
-    'a' => :cursor_left,
-    's' => :cursor_down,
-    'd' => :cursor_right,
-    'q' => :exit,
-    't' => :select
-    # 's' => :save
-  }
 
-  attr_accessor :board, :turn, :players
+  attr_reader :board, :current_player, :players
 
-  def initialize(player1, player2)
+  def initialize
     @board = Board.new
-    @players = { :b => player1, :w  => player2 }
-    @turn = :w
+    @players = {
+      white: HumanPlayer.new(:white, @board),
+      black: ComputerPlayer.new(:black, @board)
+    }
+    @current_player = :white
   end
 
   def play
-    until game_over?
-      move_selection
+    until board.checkmate?(current_player)
+      get_move(current_player)
+      @current_player = (current_player == :white) ? :black : :white
+    end
 
+    puts board.render(current_player)
+    puts "#{current_player} is checkmated."
+
+    nil
+  end
+
+  def get_move(current_player)
+    moved = false
+    until moved
+      system("clear")
+      puts board.render(current_player)
+      puts "Current player: #{current_player}"
+      if board.in_check?(current_player)
+        puts "#{current_player} is in check."
+      end
+      moved = players[current_player].make_move
     end
   end
 
-  def move_selection
-    render
-    puts "It's #{players[turn].name} turn"
-    # input = players[turn].get_input
-    input = $stdin.getch
-    read_input(input)
-    board.make_move
-    system("clear")
-    # if board.frozen_cursor != board.attacked_pos
-
-  end
-  #change this so people have another chance to make a move
-#action(get_input)
-
-  def render
-    board.render(:b)
-  end
-
-  def game_over?
-    false
-  end
-
-  def read_input(input)
-    board.send(MOVEMENTS[input])
-  end
 end
 
-# Game starting logic!
-player1 = HumanPlayer.new("white")
-player2 = HumanPlayer.new("black")
-game = Game.new(player1, player2)
+
+game = Game.new
 game.play

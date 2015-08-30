@@ -1,3 +1,6 @@
+require_relative 'piece'
+require_relative 'stepable'
+
 class King < Piece
   include Stepable
   KING_MOVES = [
@@ -11,11 +14,11 @@ class King < Piece
     [-1,  1]
   ]
 
-  def stepping_diff
+  def move_diffs
     KING_MOVES
   end
 
-  def to_s
-    color == :b ? " \u265A " : " \u2654 "
-  end
+  def symbols
+     { white: '♔', black: '♚' }
+   end
 end
