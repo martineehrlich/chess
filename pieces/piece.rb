@@ -4,7 +4,10 @@ class Piece
 
   def initialize(color, board, pos)
     raise 'invalid color' unless [:white, :black].include?(color)
-    raise 'invalid pos' unless board.valid_pos?(pos)
+    # raise 'invalid pos' unless board.valid_pos?(pos)
+    if !board.valid_pos?(pos)
+      debugger
+    end
     @color = color
     @pos = pos
     @board = board
@@ -35,6 +38,7 @@ class Piece
   def check_king?(from_pos, to_pos)
     test_board = board.dup
     test_board.move!(from_pos, to_pos)
-    test_board.in_check?(:white)
+    color == :white ? opponent = :black : opponent = :white
+    test_board.in_check?(opponent)
   end
 end

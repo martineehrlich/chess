@@ -9,11 +9,11 @@ class Game
 
   attr_reader :board, :current_player, :players
 
-  def initialize
+  def initialize(player1, player2)
     @board = Board.new
     @players = {
-      white: HumanPlayer.new(:white, @board),
-      black: ComputerPlayer.new(:black, @board)
+      white: player1,
+      black: player2
     }
     @current_player = :white
   end
@@ -39,12 +39,33 @@ class Game
       if board.in_check?(current_player)
         puts "#{current_player} is in check."
       end
-      moved = players[current_player].make_move
+      moved = players[current_player].make_move(board)
     end
   end
 
 end
 
+  begin
+    puts "What type of game do you want to play?"
+    puts "Press 1 for Human vs. Human"
+    puts "Press 2 for Human vs. Computer"
+    puts "Press 3 for Computer vs. Computer"
+    input = $stdin.getch
+    if input.to_i == 1
+      game = Game.new(HumanPlayer.new(:white), HumanPlayer.new(:black))
+    elsif input.to_i == 2
+      game = Game.new(HumanPlayer.new(:white), ComputerPlayer.new(:black))
+    elsif input.to_i == 3
+      game = Game.new(ComputerPlayer.new(:white), ComputerPlayer.new(:black))
+    elsif input == "q"
+      exit
+    else
+      raise "Please select one of the three options."
+    end
+  rescue StandardError => e
+    puts "#{e.message}"
+    retry
+  end
 
-game = Game.new
+# debugger;
 game.play

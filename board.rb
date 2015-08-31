@@ -70,15 +70,20 @@ class Board
 
   def find_king(color)
     king = pieces.find { |p| p.color == color && p.is_a?(King) }
+    if king.nil?
+      debugger
+    end
     king || (raise 'king not found?')
   end
 
   def move_piece(turn_color, from_pos = selected_pos, to_pos = cursor_pos)
   raise 'from position is empty' if self[from_pos].empty?
   piece = self[from_pos]
+  return if to_pos.nil?
   if piece.color != turn_color
     raise 'move your own piece'
   elsif !piece.moves.include?(to_pos)
+    debugger;
     raise 'piece does not move like that'
   elsif !piece.valid_moves.include?(to_pos)
     raise 'cannot move into check'
@@ -127,10 +132,8 @@ def render(color)
         print (cell.render).colorize(:background => :green)
       elsif pos == cursor_pos
           print (cell.render).colorize(:background => :yellow)
-      elsif self[cursor_pos].moves.include?(pos) && color == self[cursor_pos].color
+      elsif selected_pos && self[selected_pos].moves.include?(pos) && color == self[cursor_pos].color
           print (cell.render).colorize(:background => :cyan)
-      # elsif self[cursor_pos].moves.include?(pos) && color == self[cursor_pos].color
-      #     print (cell.render).colorize(:background => :cyan)
       else
           display_square(pos)
         end

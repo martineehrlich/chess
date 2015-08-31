@@ -2,15 +2,14 @@ class HumanPlayer
 
   attr_accessor :color, :board
 
-  def initialize(color, board)
+  def initialize(color)
     @color = color
-    @board = board
   end
 
-  def make_move
+  def make_move(board)
     begin
       action = $stdin.getch
-      moved = read_input(action)
+      moved = read_input(action, board)
     rescue StandardError => e
       puts "#{e.message}"
       board.unselect_pos
@@ -20,7 +19,7 @@ class HumanPlayer
     moved
   end
 
-  def read_input(input)
+  def read_input(input, board)
       case input
       when 'q'
         exit
