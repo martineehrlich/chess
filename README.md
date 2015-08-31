@@ -19,15 +19,15 @@ When you select a piece you may want to move, the possible moves for that piece 
 
 ## Implementation
 
-#Custom Deep Dup
+###Custom Deep Dup
 
 In order to test the valid moves for each piece and to see whether a player is in check, the board has a custom deep dup method that duplicates the board AND all of the pieces on the board.
 
-#Computer Player
+###Computer Player
 
 The computer player selects its move by checking to see if any of their pieces moves puts the other player into checkmate. If so, it makes that move. If not it is able to check if any of their pieces moves puts the other player into check. If so, it makes that move. If not it randomly selects a move.
 
-#Keeping Code DRY
+###Keeping Code DRY
 
 The code is kept dry through the use of modules and class inheritance. Two modules for piece movement, Stepable and Slideable, are included in the different piece classes. The piece classes all inherit from a Piece class that contains common methods for the different piece types.
 
