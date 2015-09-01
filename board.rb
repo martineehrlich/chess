@@ -71,7 +71,6 @@ class Board
   def find_king(color)
     king = pieces.find { |p| p.color == color && p.is_a?(King) }
     if king.nil?
-      debugger
     end
     king || (raise 'king not found?')
   end
@@ -83,7 +82,6 @@ class Board
   if piece.color != turn_color
     raise 'move your own piece'
   elsif !piece.moves.include?(to_pos)
-    debugger;
     raise 'piece does not move like that'
   elsif !piece.valid_moves.include?(to_pos)
     raise 'cannot move into check'

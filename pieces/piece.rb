@@ -4,9 +4,8 @@ class Piece
 
   def initialize(color, board, pos)
     raise 'invalid color' unless [:white, :black].include?(color)
-    # raise 'invalid pos' unless board.valid_pos?(pos)
+    raise 'invalid pos' unless board.valid_pos?(pos)
     if !board.valid_pos?(pos)
-      debugger
     end
     @color = color
     @pos = pos

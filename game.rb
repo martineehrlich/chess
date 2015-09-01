@@ -67,5 +67,4 @@ end
     retry
   end
 
-# debugger;
 game.play
